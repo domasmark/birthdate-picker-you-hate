@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<style>
+* {
+font-family: "Madefor", system-ui;
+}
+body {
+    margin-top: 60px;
+    margin-left: 180px;
+}
+h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 500;
+    color: #324054;
+}
+.canvas {
+cursor: crosshair;
+position: relative;
+z-index: 3;
+height: 300px;
+width: 730px;
+margin-top: 48px;
+box-shadow: 0 -1px 0 0 #DFE5EB, 0 1px 0 0 #DFE5EB;
+background: rgba(241, 245, 249, .5);
+}
+.labels-x {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 730px;
+    color: #707283;
+    margin-top: 20px;
+    font-size: 12px;
+}
+.labels-y {
+    position: absolute;
+    left: 140px;
+    top: 140px;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 315px;
+    color: #707283;
+    font-size: 12px;
+}
+.divider {
+    position: absolute;
+    z-index: 1;
+    top: 145px;
+    left: 180px;
+    width: 730px;
+    height: 1px;
+    background: #DFE5EB;
+}
+.divider.one { top: 195px; }
+.divider.two { top: 245px; }
+.divider.three { top: 294px; }
+.divider.four { top: 344px; }
+.divider.five { top: 394px; }
+.birthday-text {
+    box-sizing: border-box;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    width: 730px;
+    margin-top: 48px;
+    padding: 24px 24px 24px 48px;
+    border-radius: 100px;
+    background: #F1F5F9;
+}
+button {
+    border: none;
+    background: #324054;
+    color: white;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 12px 36px;
+    border-radius: 100px;
+    height: 48px;
+    cursor: none;
+}
+dialog {
+    position: absolute;
+    padding: 190px 290px;
+    background: rgba(255,255,255,0.5);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+}
+dialog img {
+    border-radius: 30px;
+}
+#knob {
+width: 6px;
+height: 6px;
+border-radius: 3px;
+background: black;
+box-shadow: none;
+position: absolute;
+top: 0; left: 0;
+z-index: 4;
+}
+p {
+    color: #324054;
+    font-size: 24px;
+    line-height: 24px;
+    margin: 0;
+}
+</style>
+<body>
+<h1>Choose your birthday date</h1>
+<div class="labels-y"><span>1922</span><span>2022</span></div>
+<div class="divider one"></div>
+<div class="divider two"></div>
+<div class="divider three"></div>
+<div class="divider four"></div>
+<div class="divider five"></div>
+<div onclick="showCoords(event)" class="canvas"></div>
+<div class="labels-x"><span>January</span><span>December</span></div>
+<div id="knob"></div>
+
+<div class="birthday-text" id="container">
+  <p id="demo"></p>
+  <button id="button" onclick="showMessage()">Submit</button>
+</div>
+<dialog id="messageDialog">
+    <img src="leonardo.gif">
+</dialog>
+
+<script>
+function showMessage() {
+    document.getElementById("messageDialog").setAttribute("open", "");
+}
+function showCoords(event) {
+  var x = event.clientX;
+  var y = event.clientY;
+  var yearCoord = y-7-136;
+  var year = Math.round(yearCoord/3);
+  var day = x-180;
+  var month = "None";
+  var monthDay = 1;
+  if (day<1) {
+  day = 1;
+  }
+    if (year<1) {
+  year = 1;
+  }
+  day = Math.round(day/2);
+  year = year + 1922;
+  if (day <= 31) {
+    month = "January";
+    monthDay = day;
+  } if (day > 31 && day <= 61) {
+    month = "February";
+        monthDay = day - 31;
+  }  if (day > 61 && day <= 92) {
+  	month = "March";
+        monthDay = day - 61;
+  }  if (day > 92 && day <= 122) {
+  	month = "April";
+        monthDay = day - 92;
+
+  }  if (day > 122 && day <= 153) {
+  	month = "May";
+        monthDay = day - 122;
+
+  }  if (day > 153 && day <= 183) {
+  	month = "June";
+        monthDay = day - 153;
+
+  }  if (day > 183 && day <= 214) {
+  	month = "July";
+        monthDay = day - 183;
+
+  }  if ( day > 214 && day <= 245) {
+  	month = "August";
+        monthDay = day - 214;
+
+  }  if ( day > 245 && day <= 275) {
+  	month = "September";
+        monthDay = day - 245;
+
+  }  if ( day > 275 && day <= 306) {
+  	month = "October";
+        monthDay = day - 275;
+
+  }  if ( day > 306 && day <= 336) {
+  	month = "November";
+        monthDay = day - 306;
+
+  }  if ( day > 336) {
+  	month = "December";
+        monthDay = day - 334;
+
+  }
+ 
+  var coords = monthDay + " " + month + ", " + year;
+  document.getElementById("demo").innerHTML = coords;
+  document.getElementById("knob").style.top = y-3 + "px";
+  document.getElementById("knob").style.left = x-3 + "px";
+  document.getElementById("container").style.display = "flex";
+}
+</script>
+
+</body>
+</html>
